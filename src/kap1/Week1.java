@@ -71,13 +71,16 @@ public class Week1 {
         int min = a[0];
         int maks = a[0];
 
+        int verdi = 0;
+
         for (int i = 1; i<a.length; i++){
-            if (a[i] > maks) {
-                maks = a[i];
+        verdi = a[i];
+            if (verdi > maks) {
+                maks = verdi;
                 m2 = i;
             }
-            if (a[i] < min) {
-                min = a[i];
+            else if (verdi < min) {
+                min = verdi;
                 m1 = i;
             }
         }
@@ -86,12 +89,17 @@ public class Week1 {
     }
 
     public static long fak(int n) {
-        int ut = 1;
-        while (n > 1) {
-            ut *= n;
-            n--;
+        if (n < 0) {
+            throw new IllegalArgumentException("n < 0");
         }
-        return ut;
+
+        long fak = 1;
+
+        for (int i = 2; i <= n; i++) {
+            fak *= i;
+        }
+
+        return fak;
     }
 
     public static int maks(int[] a)  // a er en heltallstabell
@@ -290,7 +298,7 @@ public class Week1 {
     }
 
     public static int[] heltall(int n){
-        ArrayList<Integer> a = new ArrayList<Integer>();
+        ArrayList<Integer> a = new ArrayList<>();
         int[] a2 = new int[n];
         for (int i = 1; i <= n; i++){
             a.add(i);
