@@ -3,7 +3,7 @@ package kap1;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class Kap1 {
+public class Week1 {
     public static void main(String[] args){
         /*
         //int[] tabell = {8,3,5,7,9,6,10,2,10,4};
