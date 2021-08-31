@@ -1,9 +1,7 @@
 package kap1;
 
-import java.util.Arrays;
-
 /**
- * Windoes [alt] + [enter] mens du holde på klassen for å lage tester
+ * Windows [alt] + [enter] mens du holder på klassen for å lage tester
  */
 public class MyFirstSort {
     public static void main(String[] args) {
@@ -14,11 +12,11 @@ public class MyFirstSort {
 
     /**
      * Denne funksjonen tar inn et array med verdier (heltall),
-     * og sorterer dem "in place"
+     * og sorterer dem "in place" i synkende rekkefølge
      * @param values Verdier vi skal sortere
      */
     public static void myFirstSort(int[] values) {
-        for (int k=0; k<values.length-1; ++k) {
+        for (int k = 0; k < values.length - 1; ++k) {
             //Sjekk at vi får fornuftig svar for *ett* tilfelle.
             //Vi må utføre ordentlig testing før vi
             //faktisk kan stole på kildekoden vår
@@ -31,16 +29,17 @@ public class MyFirstSort {
             values[k] = values[max_index];
             values[max_index] = temp;
 
-            //System.out.println("Bytter plass " + k + " med plass " + max_index);
-            //System.out.println("Arrayet etter ombytting");
-            //for (int value : values) {
-                System.out.print(Arrays.toString(values) + ", ");
-            }
             System.out.println();
         }
-        /**
-     * Findmax - finner index til største tall i et array,
-     * men søker bare innenfor tallene i [fra, til)
+        // Printer ut arrayet etter sortering
+        for (int value : values) {
+            System.out.print(value + ", ");
+        }
+    }
+
+    /**
+     * findMax finner største tall i et array
+     * men bare innenfor tallen [fra, til)
      */
     public static int findMax(int[] values, int fra, int til) {
         //Initialiser ved å se på første "kort"
