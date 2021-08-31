@@ -1,34 +1,44 @@
 package kap1;
 
+import java.util.Arrays;
+
+/**
+ * Windoes [alt] + [enter] mens du holde på klassen for å lage tester
+ */
 public class MyFirstSort {
     public static void main(String[] args) {
         System.out.println("Hello algdat");
-
         int[] values = {1, 7, 2, 4, 6, 9};
+        myFirstSort(values);
+    }
 
+    /**
+     * Denne funksjonen tar inn et array med verdier (heltall),
+     * og sorterer dem "in place"
+     * @param values Verdier vi skal sortere
+     */
+    public static void myFirstSort(int[] values) {
         for (int k=0; k<values.length-1; ++k) {
             //Sjekk at vi får fornuftig svar for *ett* tilfelle.
             //Vi må utføre ordentlig testing før vi
             //faktisk kan stole på kildekoden vår
             int max_index = findMax(values, k, values.length);
-            System.out.println("Største verdi ligger på plass "
-                    + max_index + " og har verdi " + values[max_index]);
+            //System.out.println("Største verdi ligger på plass "
+            //        + max_index + " og har verdi " + values[max_index]);
 
             //Bytte plass på tall på plass 0 og max_index
             int temp = values[k];
             values[k] = values[max_index];
             values[max_index] = temp;
 
-            System.out.println("Bytter plass " + k + " med plass " + max_index);
-            System.out.println("Arrayet etter ombytting");
-            for (int value : values) {
-                System.out.print(value + ", ");
+            //System.out.println("Bytter plass " + k + " med plass " + max_index);
+            //System.out.println("Arrayet etter ombytting");
+            //for (int value : values) {
+                System.out.print(Arrays.toString(values) + ", ");
             }
             System.out.println();
         }
-    }
-
-    /**
+        /**
      * Findmax - finner index til største tall i et array,
      * men søker bare innenfor tallene i [fra, til)
      */
