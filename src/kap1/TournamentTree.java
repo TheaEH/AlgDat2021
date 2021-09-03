@@ -3,8 +3,13 @@ package kap1;
 public class TournamentTree {
 
     /**
-     * A node in a tournament tree
-     * Each node has a pointer to its children
+     * A node in a tournament tree. Each node
+     * has a "pointer" to its children.
+     * A Java object is actually just a pointer to a memory address where the objects data lies.
+     * This means that we can have an instantiated object of Node,
+     * Node root = new Node('r');
+     * This node, root, then is a pointer to a memory location. At this location, we will then find
+     * the value 'r', and two more pointers: left_child and right_child.
      */
 
     public static class Node {
@@ -18,6 +23,12 @@ public class TournamentTree {
             this.right_child = null;
         }
 
+        /**
+         * This is a so-called recursive function that prints pre-order.
+         * We will cover recursive functions and what pre-order means
+         * later in the course. The print function ends up printing all
+         * nodes in the binary tournament tree to screen.
+         */
         void print() {
             System.out.print(value + ", ");
             if (this.left_child != null) {
@@ -29,14 +40,28 @@ public class TournamentTree {
         }
     }
 
+    /**
+     * A function that plays a match between two teams, and
+     * creates a parent node with the winner
+     * @param team_1 First team to play
+     * @param team_2 Second team to play
+     * @return The winner, with the two teams (team_1, and team_2) as children
+     */
     static Node playMatch(Node team_1, Node team_2) {
+        /**
+         * The following ternary if statement on line 63
+         * corresponds to the following code
         char winner;
+
         if (team_1.value > team_2.value) {
             winner = team_1.value;
         }
         else {
             winner = team_2.value;
         }
+         */
+        char winner = (team_1.value > team_2.value) ? team_1.value : team_2.value;
+
         Node parent = new Node(winner);
         parent.left_child = team_1;
         parent.right_child = team_2;
@@ -46,18 +71,22 @@ public class TournamentTree {
 
     public static void main(String[] args) {
 
+        // Create the four teams that play in the tournament
         Node z = new Node('Z');
         Node c= new Node('C');
         Node f = new Node('F');
         Node k = new Node('K');
 
+        // Play the semi-finals and store the winners
         Node semi_1 = playMatch(z, c);
         Node semi_2 = playMatch(f, k);
 
+        // Play the finals and store the winner
         Node winner = playMatch(semi_1, semi_2);
 
+        // Print out the pre-order traversal of our tournament tree
         System.out.println("Turenringstreet i pre-orden");
-        // forventer Z, Z, Z, C, K, F, K
+        // Expected output Z, Z, Z, C, K, F, K
         winner.print();
     }
 }
