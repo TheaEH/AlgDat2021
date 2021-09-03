@@ -1,5 +1,7 @@
 package kap1;
 
+import hjelpeklasser.Tabell;
+
 /**
  * Windows [alt] + [enter] mens du holder på klassen for å lage tester
  */
