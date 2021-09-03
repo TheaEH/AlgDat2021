@@ -48,9 +48,10 @@ public class TournamentTree {
      * @return The winner, with the two teams (team_1, and team_2) as children
      */
     static Node playMatch(Node team_1, Node team_2) {
-        /**
-         * The following ternary if statement on line 63
-         * corresponds to the following code
+        /*
+          The following ternary if statement on line 63
+          corresponds to the following code
+
         char winner;
 
         if (team_1.value > team_2.value) {
