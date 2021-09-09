@@ -240,7 +240,7 @@ public class Tabell {   // Samleklasse for tabellmetoder
         System.arraycopy(a,0,b,n,n);     // legger a bakerst i b
 
         for (int k = 2*n-2; k > 1; k -= 2)   // lager turneringstreet
-            b[k/2] = Math.max(b[k],b[k+1]);
+            b[k/2] = Math.min(b[k],b[k+1]);
 
         int maksverdi = b[1], nestmaksverdi = Integer.MIN_VALUE;
 
@@ -258,6 +258,162 @@ public class Tabell {   // Samleklasse for tabellmetoder
     public static void kopier(int[] a, int i, int[] b, int j, int ant) {
         for (int k = i; k < ant+i;) {
             b[j++] = a[k++];
+        }
+    }
+
+    public static void snu(int[] a, int v, int h)  // snur intervallet a[v:h]
+    {
+        while (v < h) bytt(a, v++, h--);
+    }
+
+    public static void snu(int[] a, int v)  // snur fra og med v og ut tabellen
+    {
+        snu(a, v, a.length - 1);
+    }
+
+    public static void snu(int[] a)  // snur hele tabellen
+    {
+        snu(a, 0, a.length - 1);
+    }
+
+    public static boolean nestePermutasjon(int[] a)
+    {
+        int i = a.length - 2;                    // i starter nest bakerst
+        while (i >= 0 && a[i] > a[i + 1]) i--;   // går mot venstre
+        if (i < 0) return false;                 // a = {n, n-1, . . . , 2, 1}
+
+        int j = a.length - 1;                    // j starter bakerst
+        while (a[j] < a[i]) j--;                 // stopper når a[j] > a[i]
+        bytt(a,i,j); snu(a,i + 1);               // bytter og snur
+
+        return true;                             // en ny permutasjon
+    }
+
+    public static int inversjoner(int[] a)
+    {
+        int antall = 0;  // antall inversjoner
+        for (int i = 0; i < a.length - 1; i++)
+        {
+            for (int j = i + 1; j < a.length; j++)
+            {
+                if (a[i] > a[j]) antall++;  // en inversjon siden i < j
+            }
+        }
+        return antall;
+    }
+
+    public static boolean erSortert(int[] a)  // legges i samleklassen Tabell
+    {
+        for (int i = 1; i < a.length; i++)      // starter med i = 1
+            if (a[i-1] > a[i]) return false;      // en inversjon
+
+        return true;
+    }
+
+    public static void utvalgssortering(int[] a)
+    {
+        for (int i = 0; i < a.length - 1; i++) {
+            bytt(a, i, min(a, i, a.length));  // to hjelpemetoder
+        }
+    }
+
+    public static void utvalgssortering(int[] a, int fra, int til)
+    {
+        fratilKontroll(a.length, fra, til);
+        for (int i = fra; i < til-1; i++) {
+            bytt(a, i, min(a, i, til));  // to hjelpemetoder
+        }
+    }
+
+    public static void selectionSort(int[] a) {
+        for (int i= 0; i<a.length-1; i++) { // Tallet som skal sorteres
+            int min = a[i];
+            int minIndeks = i;
+            for (int j = i+1; j<a.length; j++) {
+                if (a[j] < min) {
+                    min = a[j];
+                    minIndeks = j;
+                }
+            }
+            a[minIndeks] = a[i]; a[i] = min;    // bytter plass på a[i] og den minste vi fant
+        }
+    }
+
+    public static int linearsok(int[] a, int verdi) // legges i class Tabell
+    {
+        if (a.length == 0 || verdi > a[a.length-1])
+            return -(a.length + 1);  // verdi er større enn den største
+
+        int i = 0; for( ; a[i] < verdi; i++);  // siste verdi er vaktpost
+
+        return verdi == a[i] ? i : -(i + 1);   // sjekker innholdet i a[i]
+    }
+
+    public static int linearsok(int[] a, int k, int verdi)
+    {
+        if (k < 1)
+            throw new IllegalArgumentException("Må ha k > 0!");
+
+        int j = k - 1;
+        for (; j < a.length && verdi > a[j]; j += k);
+
+        int i = j - k + 1;  // søker i a[j-k+1:j]
+        for (; i < a.length && verdi > a[i]; i++);
+
+        if (i < a.length && a[i] == verdi) return i;  // funnet
+        else return -(i + 1);
+    }
+
+    public static int kvadratrotsok(int[] a, int verdi)
+    {
+        return linearsok(a, (int) Math.sqrt(a.length), verdi);
+    }
+
+    // 3. versjon av binærsøk - returverdier som for Programkode 1.3.6 a)
+    public static int binarysearch(int[] a, int fra, int til, int verdi)
+    {
+        Tabell.fratilKontroll(a.length,fra,til);  // se Programkode 1.2.3 a)
+        int v = fra, h = til - 1;  // v og h er intervallets endepunkter
+
+        while (v < h)  // obs. må ha v < h her og ikke v <= h
+        {
+            int m = (v + h)/2;  // heltallsdivisjon - finner midten
+
+            if (verdi > a[m]) v = m + 1;   // verdi må ligge i a[m+1:h]
+            else  h = m;                   // verdi må ligge i a[v:m]
+        }
+        if (h < v || verdi < a[v]) return -(v + 1);  // ikke funnet
+        else if (verdi == a[v]) return v;            // funnet
+        else  return -(v + 2);                       // ikke funnet
+    }
+
+    public static void innsettingssortering(int[] a, int fra, int til)
+    {
+        fratilKontroll(a.length, fra, til);
+        for (int i = fra+1; i < til; i++)  // starter med i = 1
+        {
+            int temp = a[i];  // hjelpevariabel
+            for (int j = i - 1; j >= fra && temp < a[j]; j--) Tabell.bytt(a, j, j + 1);
+        }
+    }
+
+    public static void innsettingssortering(int[] a)
+    {
+        innsettingssortering(a, 0, a.length);
+    }
+
+    public static int binarysearch(int[] a, int verdi)  // søker i hele a
+    {
+        return binarysearch(a,0,a.length,verdi);  // bruker metoden over
+    }
+
+    public static void shell(int[] a, int k)
+    {
+        for (int i = k; i < a.length; i++)
+        {
+            int temp = a[i], j = i - k;
+            for ( ; j >= 0 && temp < a[j]; j -= k) a[j + k] = a[j];
+            a[j + k] = temp;
         }
     }
 
