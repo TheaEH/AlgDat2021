@@ -1,20 +1,20 @@
 package kap1;
 import hjelpeklasser.*;
-
-import java.time.chrono.ThaiBuddhistChronology;
-import java.util.Arrays;
+import eksempelklasser.*;
 
 public class Program {
 
     public static void main(String[] args) {
+        Tid[] tider = new Tid[4];
 
-        int[] a = Tabell.randPerm(200_000);
+        tider[0] = new Tid(24,12, 2014, "19:15");
+        tider[1] = new Tid(24,12,2014,"12:00");
+        tider[2] = new Tid(23,12,2014,"12:00");
+        tider[3] = new Tid(23,12,2014,"09:00");
 
-        long tid2 = System.currentTimeMillis();
-        Tabell.innsettingssortering(a);
-        tid2 = System.currentTimeMillis() - tid2;
+        Tabell.innsettingssortering(tider);
+        for (Tid x : tider) System.out.print(x + "\n");
 
-        System.out.println("Innsettingssortering: " + tid2);
-        System.out.println(Tabell.erSortert(a));
+        // Utskrift: 00:00 07:00 09:09 22:56 23:59
     }
 }
