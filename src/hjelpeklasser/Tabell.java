@@ -1,5 +1,6 @@
 package hjelpeklasser;
 
+import javax.sound.midi.Soundbank;
 import java.util.*;
 
 @SuppressWarnings("DuplicatedCode")
@@ -618,6 +619,47 @@ public class Tabell {   // Samleklasse for tabellmetoder
     {
         return binarysearch(a,0,a.length,verdi,c);  // bruker metoden over
     }
+
+
+    // programkode 1.3.9 a) fra kompendiet
+    private static int parter0(int[] a, int v, int h, int skilleverdi)
+    {
+        while (true)                                  // stopper når v > h
+        {
+            while (v <= h && a[v] < skilleverdi) v++;   // h er stoppverdi for v
+            while (v <= h && a[h] >= skilleverdi) h--;  // v er stoppverdi for h
+
+            if (v < h) bytt(a,v++,h--);                 // bytter om a[v] og a[h]
+            else  return v;  // a[v] er nåden første som ikke er mindre enn skilleverdi
+        }
+    }
+
+    // programkode 1.3.9 f) fra kompendiet
+    private static int sParter0(int[] a, int v, int h, int indeks)
+    {
+        bytt(a, indeks, h);           // skilleverdi a[indeks] flyttes bakerst
+        int pos = parter0(a, v, h - 1, a[h]);  // partisjonerer a[v:h - 1]
+        bytt(a, pos, h);              // bytter for å få skilleverdien på rett plass
+        return pos;                   // returnerer posisjonen til skilleverdien
+    }
+
+    // programkode 1.3.9 g) fra kompendiet
+    private static void kvikksortering0(int[] a, int v, int h)  // en privat metode
+    {
+        if (v >= h) return;  // a[v:h] er tomt eller har maks ett element
+        //System.out.println("a[" + v + ":" + h + "] legges på stakken");
+        int k = sParter0(a, v, h, (v + h)/2);  // bruker midtverdien
+        kvikksortering0(a, v, k - 1);     // sorterer intervallet a[v:k-1]
+        kvikksortering0(a, k + 1, h);     // sorterer intervallet a[k+1:h]
+        //System.out.println("a[" + v + ":" + h + "] er ferdig!");
+    }
+
+    // programkode 1.3.9 h) fra kompendiet
+    public static void kvikksortering(int[] a, int fra, int til) // a[fra:til>
+    {
+        kvikksortering0(a, fra, til - 1);  // v = fra, h = til - 1
+    }
+
 
     public static <T>
     int parter(T[] a, int v, int h, T skilleverdi, Comparator<? super T> c)
