@@ -292,7 +292,7 @@ public class Tabell {   // Samleklasse for tabellmetoder
 
     public static int inversjoner(int[] a)
     {
-        int antall = 0;  // antall inversjoner
+        int antall = 0;  // antall inversjoner<
         for (int i = 0; i < a.length - 1; i++)
         {
             for (int j = i + 1; j < a.length; j++)
