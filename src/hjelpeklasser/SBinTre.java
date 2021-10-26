@@ -266,8 +266,8 @@ public class SBinTre<T> implements Beholder<T>
             else {
                 if (cmp == 0) {
                     antallVerdi++;
-                    p = p.høyre;
                 }
+                p = p.høyre;
             }
         }
         return antallVerdi;
