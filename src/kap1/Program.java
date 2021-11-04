@@ -10,13 +10,15 @@ import java.util.stream.Stream;
 public class Program {
 
     public static void main(String[] args) {
-        int[] posisjon = {1,2,3,4,5,6,7,10,11,13,14,22,23,28,29};
-        Integer[] verdi = {1,3,5,7,6,8,11,12,10,10,15,14,18,15,20};
+        int[] a = {7, 6, 5, 4, 3, 2, 1};  // verdiene i Figur 5.3.2 a)
+        PrioritetsKø<Integer> kø = HeapPrioritetsKø.naturligOrden();
+        for (int k : a) kø.leggInn(k);
 
-        BinTre<Integer> tre = new BinTre<>(posisjon, verdi);  // Bruker en konstruktør
+        kø.taUt();
+        kø.taUt();
+        kø.taUt();
+        kø.taUt();
 
-        Comparator<Integer> c = Comparator.naturalOrder();
-        System.out.println(tre.erMintre(c));  // Utskrift: true
-        System.out.println(tre.minimumsgren(Comparator.naturalOrder()));
+        System.out.println(kø);
     }
 }
